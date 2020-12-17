@@ -17,6 +17,18 @@ export const getArticle = (slug) => request({
   url: `/api/articles/${slug}`,
 })
 
+export const createArticle = (data) => request({
+  method: 'POST',
+  url: '/api/articles',
+  data
+})
+
+export const updateArticle = (slug, data) => request({
+  method: 'PUT',
+  url: `/api/articles/${slug}`,
+  data
+})
+
 export const addFavorite = slug => request({
   method: 'POST',
   url: `/api/articles/${slug}/favorite`,

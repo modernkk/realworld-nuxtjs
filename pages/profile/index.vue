@@ -11,13 +11,16 @@
           <p>
             {{ profile.bio }}
           </p>
-          <!-- <button class="btn btn-sm btn-outline-secondary action-btn">
+          <button 
+            class="btn btn-sm btn-outline-secondary action-btn"
+            v-if="profile.username !== user.username">
             <i class="ion-plus-round"></i>
             &nbsp;
             Follow {{ profile.username }} 
-          </button> -->
+          </button>
           <nuxt-link 
             class="btn btn-sm btn-outline-secondary action-btn" 
+            v-else
             :to="{
               name: 'settings'
             }">
@@ -124,11 +127,15 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import { getProfile } from '@/api/profile'
 import { getArticles } from "@/api/article";
 export default {
   name: 'ProfileIndex',
   watchQuery: ["tab"],
+  computed: {
+    ...mapState(['user'])
+  },
   async asyncData ({ params, query }) {
     const { data } = await getProfile(params.username)
     const { data: articlesData } = await getArticles({
